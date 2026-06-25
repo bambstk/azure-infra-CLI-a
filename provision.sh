@@ -24,9 +24,9 @@ APPSERVICE_PLAN="plan-npr-prf2026"
 
 if [[ $(az webapp list --resource-group $RESOURCE_GROUP --query "[?name=='$APP_NAME'] | length(@)") > 0 ]]
 then
-  echo "webapp exists"
+  echo "webapp $APP_NAME exists"
 else
-  echo "webapp doesn't exist"
+  echo "webapp $APP_NAME doesn't exist, creating webapp $APP_NAME"
   az webapp create \
     --name "$APP_NAME" \
     --resource-group "$RESOURCE_GROUP" \
