@@ -1,6 +1,7 @@
 #!/bin/bash
 
 RESOURCE_GROUP="rg-leith-zniber-prf2026"
+SHARED_RG="rg-shared-prf2026"
 APP_NAME="c-est-l-appli-oui-c-est-oui"   # nom unique obligatoire
 FUNC_NAME="c-est-la-fonction-oui-c-est-oui"   # nom unique obligatoire
 STORE_NAME="cestlestore646845641973"   # nom unique obligatoire
@@ -51,14 +52,14 @@ else
 fi
 
 
-if [[ $(az functionapp list --resource-group $RESOURCE_GROUP --query "[?name=='$FUNC_NAME'] | length(@)") > 0 ]]
+if [[ $(az functionapp list --resource-group $SHARED_RG --query "[?name=='$FUNC_NAME'] | length(@)") > 0 ]]
 then
   echo "functionapp $FUNC_NAME exists"
 else
   echo "functionapp $FUNC_NAME doesn't exist, creating functionapp $FUNC_NAME"
   az functionapp create \
     --name "$FUNC_NAME" \
-    --resource-group "$RESOURCE_GROUP" \
+    --resource-group "$SHARED_RG" \
     --storage-account "$STORE_NAME" \
     --plan "$APPSERVICE_PLAN"  \
     --runtime "Python:3.11"
