@@ -6,8 +6,6 @@ jobs:
 
   staging:
       runs-on: ubuntu-latest
-      environment: staging
-      if: github.ref_name == 'main'  # uniquement sur la branche main
 
       steps:
         - uses: actions/checkout@v6
@@ -24,5 +22,5 @@ jobs:
         - name: Déployer sur Azure App Service (staging)
           uses: azure/webapps-deploy@v3
           with:
-            app-name: ${{variable.AZURE_WEBAPP_NAME}}
+            app-name: ${{ variables.AZURE_WEBAPP_NAME }}
             package: app.php
