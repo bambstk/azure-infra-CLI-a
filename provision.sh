@@ -16,9 +16,18 @@ LOCATION="francecentral"
 
 APPSERVICE_PLAN="plan-npr-prf2026"
 
-az webapp create \
+# Source - https://stackoverflow.com/a/67384869
+# Posted by Grilse
+# Retrieved 2026-06-25, License - CC BY-SA 4.0
+
+if [[ $(az webapp list --resource-group $RESOURCE_GROUP --query "[?name=='$APP_NAME'] | length(@)") > 0 ]]
+then
+  echo "webapp exists"
+else
+  echo "webapp doesn't exist"
+  az webapp create \
     --name "$APP_NAME" \
     --resource-group "$RESOURCE_GROUP" \
     --plan "$APPSERVICE_PLAN"  \
     --runtime "PHP:8.2"
-
+fi
