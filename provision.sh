@@ -46,5 +46,5 @@ else
     --name "$FUNC_NAME" \
     --resource-group "$RESOURCE_GROUP" \
     --plan "$APPSERVICE_PLAN"  \
-    --runtime ""Python:3.11"
+    --runtime "Python:3.11"
 fi
