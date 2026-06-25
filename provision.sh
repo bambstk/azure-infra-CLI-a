@@ -3,7 +3,7 @@
 RESOURCE_GROUP="rg-leith-zniber-prf2026"
 APP_NAME="c-est-l-appli-oui-c-est-oui"   # nom unique obligatoire
 FUNC_NAME="c-est-la-fonction-oui-c-est-oui"   # nom unique obligatoire
-STORE_NAME="c-est-le-store-646845646846486546151652660516846456516332134531345303263526514561"   # nom unique obligatoire
+STORE_NAME="c-est-le-store-64684564"   # nom unique obligatoire
 LOCATION="francecentral"
 
 # Créer le resource group
