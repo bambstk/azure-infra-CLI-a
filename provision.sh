@@ -39,7 +39,7 @@ fi
 
 
 
-if [[ $(az storage list --resource-group $RESOURCE_GROUP --query "[?name=='$STORE_NAME'] | length(@)") > 0 ]]
+if [[ $(az storage account list --resource-group $RESOURCE_GROUP --query "[?name=='$STORE_NAME'] | length(@)") > 0 ]]
 then
   echo "storage $STORE_NAME exists"
 else
