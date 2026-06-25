@@ -40,14 +40,14 @@ fi
 
 
 
-if [[ $(az storage account list --resource-group $RESOURCE_GROUP --query "[?name=='$STORE_NAME'] | length(@)") > 0 ]]
+if [[ $(az storage account list --resource-group $SHARED_RG --query "[?name=='$STORE_NAME'] | length(@)") > 0 ]]
 then
   echo "storage $STORE_NAME exists"
 else
   echo "storage $STORE_NAME doesn't exist, creating storage $STORE_NAME"
   az storage account create \
   --name "$STORE_NAME" \
-  --resource-group "$RESOURCE_GROUP" \
+  --resource-group "$SHARED_RG" \
   --location "$LOCATION"
 fi
 
