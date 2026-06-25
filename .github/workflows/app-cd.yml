@@ -29,4 +29,4 @@ jobs:
           uses: azure/webapps-deploy@v3
           with:
             app-name: ${{ vars.AZURE_WEBAPP_NAME }}
-            package: app.php
+            package: ./app.php
