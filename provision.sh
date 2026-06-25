@@ -1,3 +1,5 @@
+#!/bin/bash
+
 RESOURCE_GROUP="rg-leith-zniber-prf2026"
 APP_NAME="c-est-l-appli-oui-c-est-oui"   # nom unique obligatoire
 LOCATION="francecentral"
