@@ -62,5 +62,5 @@ else
     --resource-group "$SHARED_RG" \
     --storage-account "$STORE_NAME" \
     --plan "$APPSERVICE_PLAN"  \
-    --runtime "Python:3.11"
+    --runtime "Python"
 fi
