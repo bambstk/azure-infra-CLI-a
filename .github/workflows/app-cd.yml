@@ -22,5 +22,5 @@ jobs:
         - name: Déployer sur Azure App Service (staging)
           uses: azure/webapps-deploy@v3
           with:
-            app-name: ${{ variables.AZURE_WEBAPP_NAME }}
+            app-name: ${{ vars.AZURE_WEBAPP_NAME }}
             package: app.php
