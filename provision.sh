@@ -3,6 +3,7 @@
 RESOURCE_GROUP="rg-leith-zniber-prf2026"
 APP_NAME="c-est-l-appli-oui-c-est-oui"   # nom unique obligatoire
 FUNC_NAME="c-est-la-fonction-oui-c-est-oui"   # nom unique obligatoire
+STORE_NAME="c-est-le-store-646845646846486546151652660516846456516332134531345303263526514561"   # nom unique obligatoire
 LOCATION="francecentral"
 
 # Créer le resource group
@@ -31,10 +32,23 @@ else
   az webapp create \
     --name "$APP_NAME" \
     --resource-group "$RESOURCE_GROUP" \
+    --location "$LOCATION" \
     --plan "$APPSERVICE_PLAN"  \
     --runtime "PHP:8.2"
 fi
 
+
+
+if [[ $(az storage list --resource-group $RESOURCE_GROUP --query "[?name=='$STORE_NAME'] | length(@)") > 0 ]]
+then
+  echo "storage $STORE_NAME exists"
+else
+  echo "storage $STORE_NAME doesn't exist, creating storage $STORE_NAME"
+  az storage account create \
+  --name "$STORE_NAME" \
+  --resource-group "$RESOURCE_GROUP" \
+  --location "$LOCATION"
+fi
 
 
 if [[ $(az functionapp list --resource-group $RESOURCE_GROUP --query "[?name=='$FUNC_NAME'] | length(@)") > 0 ]]
@@ -45,6 +59,8 @@ else
   az functionapp create \
     --name "$FUNC_NAME" \
     --resource-group "$RESOURCE_GROUP" \
+    --location "$LOCATION" \
+    --storage-account "$STORE_NAME" \
     --plan "$APPSERVICE_PLAN"  \
     --runtime "Python:3.11"
 fi
