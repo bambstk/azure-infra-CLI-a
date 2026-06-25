@@ -1,7 +1,9 @@
-name: deployerment-app
+name: deployerment-func
 
-on: 
-  workflow_dispatch:       # permet de déclencher manuellement depuis l'interface GitHub
+on:
+#   push:
+#     branches: [main]
+   workflow_dispatch:       # permet de déclencher manuellement depuis l'interface GitHub
 
 permissions:
   id-token: write
@@ -26,8 +28,13 @@ jobs:
           run: chmod +x provision.sh
         - run: ./provision.sh
 
-        - name: Déployer sur Azure App Service (staging)
-          uses: azure/webapps-deploy@v3
+        - name: Setup Python
+          uses: actions/setup-python@v6
           with:
-            app-name: ${{ vars.AZURE_WEBAPP_NAME }}
-            package: ./ressource_php
+            python-version: "3.11"
+
+        - name: Déployer sur Azure function (staging)
+          uses: Azure/functions-action@v1
+          with:
+            app-name: ${{ vars.AZURE_FUNCTION_NAME }}
+            package: ./ressource_func

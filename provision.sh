@@ -2,6 +2,7 @@
 
 RESOURCE_GROUP="rg-leith-zniber-prf2026"
 APP_NAME="c-est-l-appli-oui-c-est-oui"   # nom unique obligatoire
+FUNC_NAME="c-est-la-fonction-oui-c-est-oui"   # nom unique obligatoire
 LOCATION="francecentral"
 
 # Créer le resource group
@@ -32,4 +33,18 @@ else
     --resource-group "$RESOURCE_GROUP" \
     --plan "$APPSERVICE_PLAN"  \
     --runtime "PHP:8.2"
+fi
+
+
+
+if [[ $(az functionapp list --resource-group $RESOURCE_GROUP --query "[?name=='$FUNC_NAME'] | length(@)") > 0 ]]
+then
+  echo "functionapp $FUNC_NAME exists"
+else
+  echo "functionapp $FUNC_NAME doesn't exist, creating functionapp $FUNC_NAME"
+  az functionapp create \
+    --name "$FUNC_NAME" \
+    --resource-group "$RESOURCE_GROUP" \
+    --plan "$APPSERVICE_PLAN"  \
+    --runtime ""Python:3.11"
 fi
