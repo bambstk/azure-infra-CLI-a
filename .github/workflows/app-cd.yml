@@ -21,7 +21,7 @@ jobs:
             tenant-id: ${{ secrets.AZURE_TENANT_ID }}
             subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-        - run: provision.sh
+        - run: ./provision.sh
 
         - name: Déployer sur Azure App Service (staging)
           uses: azure/webapps-deploy@v3
