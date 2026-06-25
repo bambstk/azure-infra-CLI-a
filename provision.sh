@@ -59,7 +59,6 @@ else
   az functionapp create \
     --name "$FUNC_NAME" \
     --resource-group "$RESOURCE_GROUP" \
-    --location "$LOCATION" \
     --storage-account "$STORE_NAME" \
     --plan "$APPSERVICE_PLAN"  \
     --runtime "Python:3.11"
