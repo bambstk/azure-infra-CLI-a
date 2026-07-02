@@ -82,8 +82,6 @@ else
   az container create \
     --name "$ACI_NAME" \
     --resource-group "$RESOURCE_GROUP" \
-    --storage-account "$STORE_NAME" \
-    --plan "$APPSERVICE_PLAN"  \
     --location "$LOCATION" \
     --image mcr.microsoft.com/azuredocs/aci-helloworld \
     --os-type linux \

@@ -41,12 +41,12 @@ else
 fi
 
 
-if [[ $(az storage account list --resource-group $RESOURCE_GROUP --query "[?name=='$STORE_NAME'] | length(@)") > 0 ]]
-then
-  echo "deleting storage $STORE_NAME"
-  az storage account delete \
-  --name "$STORE_NAME" \
-  --resource-group "$RESOURCE_GROUP" 
-else
-  echo "storage $STORE_NAME doesn't exist"
-fi
+# if [[ $(az storage account list --resource-group $RESOURCE_GROUP --query "[?name=='$STORE_NAME'] | length(@)") > 0 ]]
+# then
+#   echo "deleting storage $STORE_NAME"
+#   az storage account delete \
+#   --name "$STORE_NAME" \
+#   --resource-group "$RESOURCE_GROUP" 
+# else
+#   echo "storage $STORE_NAME doesn't exist"
+# fi
