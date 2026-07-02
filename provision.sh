@@ -1,25 +1,34 @@
 #!/bin/bash
 
-RESOURCE_GROUP="rg-leith-zniber-prf2026"
-SHARED_RG="rg-shared-prf2026"
+export MSYS_NO_PATHCONV=1
+
+RESOURCE_GROUP="lzniberRG"
 APP_NAME="c-est-l-appli-oui-c-est-oui"   # nom unique obligatoire
-FUNC_NAME="c-est-la-fonction-oui-c-est-oui"   # nom unique obligatoire
-STORE_NAME="cestlestore618655641973"   # nom unique obligatoire
+FUNC_NAME="c-est-la-fonction-oui-oui-c-est-oui"   # nom unique obligatoire
+STORE_NAME="cestlestore618673641973"   # nom unique obligatoire
 LOCATION="francecentral"
 
 # Créer le resource group
 # az group create --name "$RESOURCE_GROUP" --location "$LOCATION"
 # on a déjà un ressource group
 
-# Créer le plan App Service (B1 — nécessaire pour Always On et la stabilité)
-# az appservice plan create \
-#     --name "plan-nexacloud" \
-#     --resource-group "$RESOURCE_GROUP" \
-#     --sku B1 \
-#     --is-linux
-#On utilise un appservice plan commun qui existe déjà 
+# APPSERVICE_PLAN="plan-gang-leith"
 
+# #Créer le plan App Service (B1 — nécessaire pour Always On et la stabilité)
+# if [[ $(az appservice plan list --resource-group $RESOURCE_GROUP --query "[?name=='$APPSERVICE_PLAN'] | length(@)") > 0 ]]
+# then
+#   echo "plan app service $APP_NAME exists"
+# else
+#   az appservice plan create \
+#       --name "$APPSERVICE_PLAN" \
+#       --resource-group "$RESOURCE_GROUP" \
+#       --sku B1 \
+#       --is-linux
+# fi
+
+#On utilise le appservice plan partagé
 APPSERVICE_PLAN="plan-npr-prf2026"
+PLAN_ID="/subscriptions/5e683e0f-b00c-48d6-9769-5aaf598de8f1/resourceGroups/rg-shared-prf2026/providers/Microsoft.Web/serverfarms/plan-npr-prf2026"
 
 # Source - https://stackoverflow.com/a/67384869
 # Posted by Grilse
@@ -33,34 +42,33 @@ else
   az webapp create \
     --name "$APP_NAME" \
     --resource-group "$RESOURCE_GROUP" \
-    --location "$LOCATION" \
     --plan "$APPSERVICE_PLAN"  \
     --runtime "PHP:8.2"
 fi
 
 
 
-if [[ $(az storage account list --resource-group $SHARED_RG --query "[?name=='$STORE_NAME'] | length(@)") > 0 ]]
+if [[ $(az storage account list --resource-group $RESOURCE_GROUP --query "[?name=='$STORE_NAME'] | length(@)") > 0 ]]
 then
   echo "storage $STORE_NAME exists"
 else
   echo "storage $STORE_NAME doesn't exist, creating storage $STORE_NAME"
   az storage account create \
   --name "$STORE_NAME" \
-  --resource-group "$SHARED_RG" \
+  --resource-group "$RESOURCE_GROUP" \
   --location "$LOCATION"
 fi
 
 
-if [[ $(az functionapp list --resource-group $SHARED_RG --query "[?name=='$FUNC_NAME'] | length(@)") > 0 ]]
+if [[ $(az functionapp list --resource-group $RESOURCE_GROUP --query "[?name=='$FUNC_NAME'] | length(@)") > 0 ]]
 then
   echo "functionapp $FUNC_NAME exists"
 else
   echo "functionapp $FUNC_NAME doesn't exist, creating functionapp $FUNC_NAME"
   az functionapp create \
     --name "$FUNC_NAME" \
-    --resource-group "$SHARED_RG" \
+    --resource-group "$RESOURCE_GROUP" \
     --storage-account "$STORE_NAME" \
-    --plan "$APPSERVICE_PLAN"  \
+    --plan "$PLAN_ID"  \
     --runtime "Python"
 fi
