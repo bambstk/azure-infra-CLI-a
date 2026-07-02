@@ -5,7 +5,8 @@ export MSYS_NO_PATHCONV=1
 RESOURCE_GROUP="lzniberRG"
 APP_NAME="c-est-l-appli-oui-c-est-oui"   # nom unique obligatoire
 FUNC_NAME="c-est-la-fonction-oui-oui-c-est-oui"   # nom unique obligatoire
-STORE_NAME="cestlestore618673641973"   # nom unique obligatoire
+STORE_NAME="cestlestore618673641973" # nom unique obligatoire
+ACI_NAME="je-sais-plus-quoi-mettre"  # nom unique obligatoire
 LOCATION="francecentral"
 
 # Créer le resource group
@@ -71,4 +72,24 @@ else
     --storage-account "$STORE_NAME" \
     --plan "$PLAN_ID"  \
     --runtime "Python"
+fi
+
+if [[ $(az container  list --resource-group $RESOURCE_GROUP --query "[?name=='$ACI_NAME'] | length(@)") > 0 ]]
+then
+  echo "container instance $ACI_NAME exists"
+else
+  echo "container instance $ACI_NAME doesn't exist, creating container instance $ACI_NAME"
+  az functionapp create \
+    --name "$ACI_NAME" \
+    --resource-group "$RESOURCE_GROUP" \
+    --storage-account "$STORE_NAME" \
+    --plan "$APPSERVICE_PLAN"  \
+    --location "$LOCATION" \
+    --image mcr.microsoft.com/azuredocs/aci-helloworld \
+    --os-type linux \
+    --cpu 1 \
+    --memory 1.5 \
+    --ip-address "public" \
+    --dns-name-label "api-aci-leith" \
+    --ports 80
 fi
