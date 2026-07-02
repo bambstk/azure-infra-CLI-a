@@ -35,7 +35,8 @@ then
   echo "deleting container instance $ACI_NAME"
   az container delete \
     --name "$ACI_NAME" \
-    --resource-group "$RESOURCE_GROUP" 
+    --resource-group "$RESOURCE_GROUP" \
+    --yes
 else
   echo "container instance $ACI_NAME doesn't exist"
 fi
