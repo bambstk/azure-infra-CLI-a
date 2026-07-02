@@ -79,10 +79,17 @@ then
   echo "container instance $ACI_NAME exists"
 else
   echo "container instance $ACI_NAME doesn't exist, creating container instance $ACI_NAME"
-  az functionapp create \
+  az container create \
     --name "$ACI_NAME" \
     --resource-group "$RESOURCE_GROUP" \
     --storage-account "$STORE_NAME" \
+    --plan "$APPSERVICE_PLAN"  \
+    --location "$LOCATION" \
     --image mcr.microsoft.com/azuredocs/aci-helloworld \
-    --plan "$PLAN_ID"
+    --os-type linux \
+    --cpu 1 \
+    --memory 1.5 \
+    --ip-address "public" \
+    --dns-name-label "api-aci-leith" \
+    --ports 80
 fi
