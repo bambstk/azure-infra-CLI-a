@@ -47,7 +47,8 @@ fi
 #   echo "deleting storage $STORE_NAME"
 #   az storage account delete \
 #   --name "$STORE_NAME" \
-#   --resource-group "$RESOURCE_GROUP" 
+#   --resource-group "$RESOURCE_GROUP" \
+#   --yes
 # else
 #   echo "storage $STORE_NAME doesn't exist"
 # fi
