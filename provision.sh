@@ -83,9 +83,6 @@ else
     --name "$ACI_NAME" \
     --resource-group "$RESOURCE_GROUP" \
     --storage-account "$STORE_NAME" \
-    --plan "$APPSERVICE_PLAN"  \
     --image mcr.microsoft.com/azuredocs/aci-helloworld \
-    --os-type linux \
-    --cpu 1 \
-    --memory 1.5 
+    --plan "$PLAN_ID"
 fi
